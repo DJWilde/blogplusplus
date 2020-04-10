@@ -1,0 +1,45 @@
+/* Pasek nawigacyjny */
+.navbar .nav-item {
+  margin-right: 10px;
+}
+
+.navbar .nav-item .nav-link {
+  color: white;
+}
+
+/* Jumbotron */
+.jumbotron {
+  height: 800px;
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.3) 100%
+    ),
+    url("../img/iphone-notebook-pen-working-34578.jpg");
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+}
+
+/* Zdjęcia */
+.images {
+  margin: 20px;
+}
+
+.jumbotron-elements {
+  text-align: center;
+  color: white;
+}
+
+#nazwa_uzytkownika {
+  font-weight: bold;
+  color: gray;
+  font-size: 13px;
+}
+
+/* Stopka */
+.page-footer {
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
