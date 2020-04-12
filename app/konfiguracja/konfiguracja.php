@@ -9,7 +9,7 @@
     // Katalog główny
     define('KAT_GLOWNY', dirname(dirname(__FILE__)));
     // Główne URL
-    define('URL_GLOWNE', 'http://localhost/blogplusplus');
+    define('URL_GLOWNE', '_MIEJSCE_NA_URL_');
     // Nazwa strony
     define('NAZWA_STRONY', 'Blog++');
     // Wersja aplikacji
