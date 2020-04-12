@@ -98,4 +98,31 @@
             // Zwrócenie wyniku
             return $this->baza_danych->pojedynczyWynik();
         }
+
+        public function aktualizujUzytkownika($dane) {
+            $this->baza_danych->zapytanie('UPDATE uzytkownicy SET nazwa_uzytkownika = :nazwa_uzytkownika,
+                                            imie = :imie, nazwisko = :nazwisko, email = :email WHERE id = :id');
+            $this->baza_danych->dowiaz(':id', $dane['id']);
+            $this->baza_danych->dowiaz(':nazwa_uzytkownika', $dane['nazwa_uzytkownika']);
+            $this->baza_danych->dowiaz(':imie', $dane['imie']);
+            $this->baza_danych->dowiaz(':nazwisko', $dane['nazwisko']);
+            $this->baza_danych->dowiaz(':email', $dane['email']);
+
+            if ($this->baza_danych->wykonaj()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function aktualizujHaslo($dane) {
+            $this->baza_danych->zapytanie('UPDATE uzytkownicy SET haslo = :haslo WHERE id = :id AND nazwa_uzytkownika = :nazwa_uzytkownika AND
+                                            imie = :imie AND nazwisko = :nazwisko AND email = :email');
+            $this->baza_danych->dowiaz(':haslo', $dane['haslo']);
+            $this->baza_danych->dowiaz(':id', $dane['id']);
+            $this->baza_danych->dowiaz(':nazwa_uzytkownika', $dane['nazwa_uzytkownika']);
+            $this->baza_danych->dowiaz(':imie', $dane['imie']);
+            $this->baza_danych->dowiaz(':nazwisko', $dane['nazwisko']);
+            $this->baza_danych->dowiaz(':email', $dane['email']);
+        }
     }

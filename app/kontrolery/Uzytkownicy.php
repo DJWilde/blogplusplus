@@ -24,7 +24,9 @@
             $uzytkownik = $this->modelUzytkownika->pobierzUzytkownikaPoId($id);
 
             $dane = array(
-                'uzytkownik' => $uzytkownik
+                'id' => $id,
+                'uzytkownik' => $uzytkownik,
+                'gravatar' => gravatar($_SESSION['email'])
             );
 
             $this->wczytajWidok('uzytkownicy/panel_glowny', $dane);
@@ -203,12 +205,106 @@
             $_SESSION['imie'] = $uzytkownik->imie;
             $_SESSION['nazwisko'] = $uzytkownik->nazwisko;
             $_SESSION['email'] = $uzytkownik->email;
-            przekieruj('strony/index');
+            przekieruj('uzytkownicy/panel_glowny/' . $_SESSION['id_uzytkownika']);
         }
 
-        public function ustawienia() {
+        public function ustawienia($id) {
             if (!czyZalogowany()) {
                 przekieruj('uzytkownicy/logowanie');
+            }
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $dane = array(
+                    'id' => $id,
+                    'id_uzytkownika' => $_SESSION['id_uzytkownika'],
+                    'nazwa_uzytkownika' => trim($_POST['nazwa_uzytkownika']),
+                    'imie' => trim($_POST['imie']),
+                    'nazwisko' => trim($_POST['nazwisko']),
+                    'email' => trim($_POST['email']),
+                    'haslo' => trim($_POST['haslo']),
+                    'potwierdzenie_hasla' => trim($_POST['potwierdzenie_hasla']),
+                    'blad_nazwa_uzytkownika' => '',
+                    'blad_imie' => '',
+                    'blad_nazwisko' => '',
+                    'blad_email' => '',
+                    'blad_haslo' => '',
+                    'blad_potwierdzenie_hasla' => ''
+                );
+    
+                // 3. Walidacja imienia i nazwiska
+                if (empty($dane['imie'])) {
+                    $dane['blad_imie'] = 'Wypełnij to pole.';
+                }
+
+                if (empty($dane['nazwisko'])) {
+                    $dane['blad_nazwisko'] = 'Wypełnij to pole.';
+                }
+
+                // 4. Walidacja e-maila i sprawdzenie czy użytkownik o danym adresie e-mail istnieje
+                if (empty($dane['email'])) {
+                    $dane['blad_email'] = 'Wypełnij to pole.';
+                } 
+
+                // 5. Walidacja nazwy użytkownika i sprawdzenie czy użytkownik o danej nazwie użytkownika istnieje
+                if (empty($dane['nazwa_uzytkownika'])) {
+                    $dane['blad_nazwa_uzytkownika'] = 'Wypełnij to pole.';
+                }
+
+                // 6. Sprawdzenie obecności hasła i ich długości
+                if (empty($dane['haslo'])) {
+                    $dane['blad_haslo'] = 'Wypełnij to pole.';
+                } else if (strlen($dane['haslo']) < 6) {
+                    $dane['blad_haslo'] = 'Hasło musi mieć przynajmniej 6 znaków.';
+                }
+
+                // 7. Sprawdzenie zgodności haseł
+                if (empty($dane['potwierdzenie_hasla'])) {
+                    $dane['blad_potwierdzenie_hasla'] = 'Potwierdź swoje hasło.';
+                } else {
+                    if ($dane['haslo'] !== $dane['potwierdzenie_hasla']) {
+                        $dane['blad_potwierdzenie_hasla'] = 'Hasła się nie zgadzają.';
+                    }
+                }
+
+                if (empty($dane['blad_nazwa_uzytkownika']) && empty($dane['blad_imie']) && empty($dane['blad_nazwisko']) &&
+                    empty($dane['blad_email'])) {
+                    if (!empty($dane['haslo']) && !empty($dane['potwierdzenie_hasla'])) {
+                        $dane['haslo'] = password_hash($dane['haslo'], PASSWORD_BCRYPT);
+                        if ($this->modelUzytkownika->aktualizujHaslo($dane)) {
+                            wyswietlPowiadomienie('uzytkownik_powiadomienie', 'Twoje dane zostały pomyślnie zaktualizowane');
+                            przekieruj('uzytkownicy/panel_glowny/' . $id);
+                        } else {
+                            die('Coś poszło nie tak...');
+                        }
+                    }
+                    if ($this->modelUzytkownika->aktualizujUzytkownika($dane)) {
+                        wyswietlPowiadomienie('uzytkownik_powiadomienie', 'Twoje dane zostały pomyślnie zaktualizowane');
+                        przekieruj('uzytkownicy/panel_glowny/' . $id);
+                    } else {
+                        die('Coś poszło nie tak...');
+                    }
+                } else {
+                    $this->wczytajWidok('uzytkownicy/ustawienia', $dane);
+                }
+            } else {
+                $uzytkownik = $this->modelUzytkownika->pobierzUzytkownikaPoId($id);
+
+                if (czyDanyUzytkownik($id)) {
+                    $dane = array(
+                        'id' => $id,
+                        'id_uzytkownika' => $_SESSION['id_uzytkownika'],
+                        'nazwa_uzytkownika' => trim($uzytkownik->nazwa_uzytkownika),
+                        'imie' => trim($uzytkownik->imie),
+                        'nazwisko' => trim($uzytkownik->nazwisko),
+                        'email' => trim($uzytkownik->email),
+                        'haslo' => '',
+                        'potwierdzenie_hasla' => '',
+                    );
+        
+                    $this->wczytajWidok('uzytkownicy/ustawienia', $dane);
+                } else {
+                    przekieruj('uzytkownicy/panel_glowny/' . $_SESSION['id_uzytkownika']);
+                }
             }
         }
 

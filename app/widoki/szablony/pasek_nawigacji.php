@@ -27,7 +27,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="<?php echo URL_GLOWNE; ?>/uzytkownicy/panel_glowny/<?php echo $_SESSION['id_uzytkownika']; ?>">Zobacz profil</a>
-                                <a class="dropdown-item" href="#">Ustawienia</a>
+                                <a class="dropdown-item" href="<?php echo URL_GLOWNE; ?>/uzytkownicy/ustawienia/<?php echo $_SESSION['id_uzytkownika']; ?>">Ustawienia</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?php echo URL_GLOWNE; ?>/uzytkownicy/wyloguj">Wyloguj się</a>
                             </div>

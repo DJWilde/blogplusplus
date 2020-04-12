@@ -9,11 +9,18 @@
             </div>
         </form>
     </div>
-    <div class="container m-auto">
+    <div class="container">
         <?php foreach ($dane['uzytkownicy'] as $uzytkownik) : ?>
             <hr>
-            <img class="images" src="<?php echo KAT_GLOWNY; ?>/public/img/log.png" alt="Awatar" width="100" height="100">
-            <h4><?php echo $uzytkownik->imie; ?> <?php echo $uzytkownik->nazwisko; ?></h4>
+            <div class="row">
+                <div class="col-md-2">
+                    <img class="images" src="<?php echo gravatar($uzytkownik->email); ?>" alt="Awatar" width="100" height="100">
+                </div>
+                <div class="col-md-10 mt-3">
+                    <a href="<?php echo URL_GLOWNE; ?>/uzytkownicy/panel_glowny/<?php echo $uzytkownik->id; ?>"><h4><?php echo $uzytkownik->imie; ?> <?php echo $uzytkownik->nazwisko; ?></h4></a>
+                    <span id="nazwa_uzytkownika" class="text-center">@<?php echo $uzytkownik->nazwa_uzytkownika; ?></span>
+                </div>
+            </div>
         <?php endforeach; ?>
     </div>
 <?php require KAT_GLOWNY . '/widoki/szablony/stopka.php'; ?>

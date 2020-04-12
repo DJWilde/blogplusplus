@@ -13,4 +13,4 @@
     // Nazwa strony
     define('NAZWA_STRONY', 'Blog++');
     // Wersja aplikacji
-    define('WERSJA_APLIKACJI', '0.1');
+    define('WERSJA_APLIKACJI', '0.2');
