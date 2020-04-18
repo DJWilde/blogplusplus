@@ -2,9 +2,9 @@
     // Stałe
     // Informacje o bazie danych
     define('DB_HOST', 'localhost');
-    define('DB_UZYTKOWNIK', 'root');
-    define('DB_HASLO', 'Tyskds123sk@');
-    define('DB_NAZWA', 'blogplusplus');
+    define('DB_UZYTKOWNIK', '_MIEJSCE_NA_UZYTKOWNIKA_');
+    define('DB_HASLO', '_MIEJSCE_NA_HASLO_');
+    define('DB_NAZWA', '_MIEJSCE_NA_NAZWE');
 
     // Katalog główny
     define('KAT_GLOWNY', dirname(dirname(__FILE__)));
