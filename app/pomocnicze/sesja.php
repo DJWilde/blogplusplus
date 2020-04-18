@@ -1,6 +1,20 @@
 <?php
     session_start();
 
+    function generujTokenCsrf($nazwa_formularza) {
+        $klucz = '54erdt6o7r5eudxyfcgu79t#';
+        if (!session_id()) {
+            session_start();
+        }
+
+        $id_sesji = session_id();
+        return sha1($nazwa_formularza . $id_sesji . $klucz);
+    }
+
+    function sprawdzToken($token, $nazwa_formularza) {
+        return $token === generujTokenCsrf($nazwa_formularza);
+    }
+
     function wyswietlPowiadomienie($nazwa = '', $powiadomienie = '', $klasa = 'alert alert-success') {
         if (!empty($nazwa)) {
             if (!empty($powiadomienie) && empty($_SESSION[$nazwa])) {

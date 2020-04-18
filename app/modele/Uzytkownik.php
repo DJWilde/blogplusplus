@@ -44,6 +44,7 @@
             // Zwrócenie wyniku
             $wynik = $this->baza_danych->pojedynczyWynik();
 
+            // Weryfikacja hasła
             $haszowane_haslo = $wynik->haslo;
             if (password_verify($haslo, $haszowane_haslo)) {
                 return $wynik;

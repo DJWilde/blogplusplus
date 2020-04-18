@@ -45,6 +45,7 @@
                     placeholder="Potwierdź swoje nowe hasło" value="<?php echo $dane['potwierdzenie_hasla']; ?>" />
                     <span class="invalid-feedback"><?php echo $dane['blad_potwierdzenie_hasla']; ?></span>
                 </div>
+                <input type="hidden" name="token_csrf" value="<?php echo generujTokenCsrf('formularz_ustawienia'); ?>">
                 <button type="submit" class="btn btn-primary btn-block">
                     Aktualizuj ustawienia
                 </button>

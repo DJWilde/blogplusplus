@@ -21,6 +21,7 @@
                     placeholder="Wpisz hasło" value="<?php echo $dane['haslo']; ?>" />
                     <span class="invalid-feedback"><?php echo $dane['blad_haslo']; ?></span>
                 </div>
+                <input type="hidden" name="token_csrf" value="<?php echo generujTokenCsrf('formularz_logowania'); ?>">
                 <button type="submit" class="btn btn-primary btn-block">
                     Zaloguj się!
                 </button>

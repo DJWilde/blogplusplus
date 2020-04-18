@@ -7,7 +7,7 @@
                 <i class="fas fa-user-plus"></i> Zarejestruj się
             </h1>
             <?php wyswietlPowiadomienie('rejestracja_powiadomienie'); ?>
-            <form action="<?php echo URL_GLOWNE; ?>/uzytkownicy/rejestracja" method="POST">
+            <form id="formularz_rejestracyjny" action="<?php echo URL_GLOWNE; ?>/uzytkownicy/rejestracja" method="POST">
                 <div class="form-group">
                     <label for="nazwa_uzytkownika">Nazwa użytkownika</label>
                     <input type="nazwa_uzytkownika" id="nazwa_uzytkownika" name="nazwa_uzytkownika" 
@@ -45,6 +45,7 @@
                     placeholder="Potwierdź swoje hasło" value="<?php echo $dane['potwierdzenie_hasla']; ?>" />
                     <span class="invalid-feedback"><?php echo $dane['blad_potwierdzenie_hasla']; ?></span>
                 </div>
+                <input type="hidden" name="token_csrf" value="<?php echo generujTokenCsrf('formularz_rejestracyjny'); ?>">
                 <button type="submit" class="btn btn-primary btn-block">
                     Zarejestruj się!
                 </button>

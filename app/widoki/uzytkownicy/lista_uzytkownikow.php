@@ -7,6 +7,7 @@
                 <input type="email" id="email" name="email" class="form-control" 
                 placeholder="Wpisz imię i nazwisko" value="<?php echo $dane['wpisany_uzytkownik']; ?>" />
             </div>
+            <input type="hidden" name="token_csrf" value="<?php echo generujTokenCsrf('formularz_uzytkownicy'); ?>">
         </form>
     </div>
     <div class="container">
@@ -24,3 +25,20 @@
         <?php endforeach; ?>
     </div>
 <?php require KAT_GLOWNY . '/widoki/szablony/stopka.php'; ?>
+<!-- <script>
+    $('document').ready(function() {
+        $('#email').keyup(function() {
+            let zapytanie = $(this).val();
+            if (zapytanie != '') {
+                $.ajax({
+                    url: 'ajax_wyszukiwanie.php',
+                    method: 'POST',
+                    data: {zapytanie},
+                    success: function() {
+
+                    }
+                })
+            }
+        });
+    });
+</script> -->
